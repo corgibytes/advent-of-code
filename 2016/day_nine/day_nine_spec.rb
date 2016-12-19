@@ -6,20 +6,17 @@ describe DayNine do
   it 'should decompress with no markers to itself' do
     day_nine = DayNine.new('ADVENT')
     expect(day_nine.result_length).to eql(6)
-    #expect(day_nine.result).to eql('ADVENT')
   end
 
 # A(1x5)BC repeats only the B a total of 5 times, becoming ABBBBBC for a decompressed length of 7.
   it 'should use markers' do
     day_nine = DayNine.new('A(1x5)BC')
     expect(day_nine.result_length).to eql(7)
-    #expect(day_nine.result).to eql('ABBBBBC')
   end
 # (3x3)XYZ becomes XYZXYZXYZ for a decompressed length of 9.
   it 'should duplicate a longer base string' do
     day_nine = DayNine.new('(3x3)XYZ')
     expect(day_nine.result_length).to eq(9)
-    #expect(day_nine.result).to eq('XYZXYZXYZ')
   end
 # A(2x2)BCD(2x2)EFG doubles the BC and EF, becoming ABCBCDEFEFG for a decompressed length of 11.
 # (6x1)(1x3)A simply becomes (1x3)A - the (1x3) looks like a marker, but because it's within a data section of another marker, it is not treated any differently from the A that comes after it. It has a decompressed length of 6.
