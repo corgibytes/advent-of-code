@@ -35,4 +35,13 @@ describe DayNine do
     expect(day_nine.result_length).to eq(6)
   end
 # X(8x2)(3x3)ABCY becomes X(3x3)ABC(3x3)ABCY (for a decompressed length of 18), because the decompressed data from the (8x2) marker (the (3x3)ABC) is skipped and not processed further.
+  it 'with multiple markers next to each other' do
+    day_nine = DayNine.new('X(8x2)(3x3)ABCY')
+    expect(day_nine.result_length).to eq(18)
+  end
+
+  it 'with input from day 9' do
+    day_nine = DayNine.new(File.open('input.txt', 'r').read)
+    expect(day_nine.result_length).to eq(70187)
+  end
 end
