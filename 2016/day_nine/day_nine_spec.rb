@@ -19,6 +19,11 @@ describe DayNine do
     expect(day_nine.result_length).to eq(9)
   end
 # A(2x2)BCD(2x2)EFG doubles the BC and EF, becoming ABCBCDEFEFG for a decompressed length of 11.
+  it 'with multiple markers' do
+    day_nine = DayNine.new('A(2x2)BCD(2x2)EFG')
+    expect(day_nine.result_length).to eq(11)
+  end
+
 # (6x1)(1x3)A simply becomes (1x3)A - the (1x3) looks like a marker, but because it's within a data section of another marker, it is not treated any differently from the A that comes after it. It has a decompressed length of 6.
 # X(8x2)(3x3)ABCY becomes X(3x3)ABC(3x3)ABCY (for a decompressed length of 18), because the decompressed data from the (8x2) marker (the (3x3)ABC) is skipped and not processed further.
 end
