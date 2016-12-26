@@ -24,35 +24,29 @@ describe DayNinePartTwo do
     expect(day_nine.result_length).to eq(11)
   end
 
-  # (6x1)(1x3)A simply becomes (1x3)A - the (1x3) looks like a marker, but because it's within a data section of another marker, it is not treated any differently from the A that comes after it. It has a decompressed length of 6.
-  # markers = ['(6x1)', '(1x3)']
-  # drop 2nd marker immediately after any marker
-  # then generate
-  # (6x1) = Take Next 6 Characters and Repeat 1 Time
-  #   result = (1x3)A
-  xit 'with multiple markers next to each other' do
-    day_nine = DayNinePartTwo.new('(6x1)(1x3)A')
-    expect(day_nine.result_length).to eq(3)
-  end
 # X(8x2)(3x3)ABCY becomes X(3x3)ABC(3x3)ABCY (for a decompressed length of 18), because the decompressed data from the (8x2) marker (the (3x3)ABC) is skipped and not processed further.
   it 'with multiple markers next to each other' do
     day_nine = DayNinePartTwo.new('X(8x2)(3x3)ABCY')
     expect(day_nine.result_length).to eq(20)
   end
 
-  xit 'should use up letters left' do
-    day_nine = DayNinePartTwo.new('(100x1)ABCD')
-    expect(day_nine.result_length).to eq(4)
+  it 'should create a large number of A' do
+    day_nine = DayNinePartTwo.new('(27x12)(20x12)(13x14)(7x10)(1x12)A')
+    expect(day_nine.result_length).to eq(241920)
   end
 
-  xit 'with input from day 9' do
-    day_nine = DayNinePartTwo.new(File.open('input.txt', 'r').read)
-    # 70180 - is too low
-    expect(day_nine.result_length).to eq(70186)
-    # 70187 - is too high
+  it 'should expand number to a decent length' do
+    day_nine = DayNinePartTwo.new('(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN')
+    expect(day_nine.result_length).to eq(445)
   end
-  xit 'with input from day 9' do
+
+  it 'with input from day 9' do
+    day_nine = DayNinePartTwo.new(File.open('input.txt', 'r').read)
+    expect(day_nine.result_length).to eq(10915059201)
+  end
+
+  it 'with input from day 9' do
     day_nine = DayNinePartTwo.new(File.open('input_catalina.txt', 'r').read)
-    expect(day_nine.result_length).to eq(115119)
+    expect(day_nine.result_length).to eq(11107527530)
   end
 end
