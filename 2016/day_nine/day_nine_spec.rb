@@ -40,8 +40,15 @@ describe DayNine do
     expect(day_nine.result_length).to eq(18)
   end
 
+  it 'should use up letters left' do
+    day_nine = DayNine.new('(100x1)ABCD')
+    expect(day_nine.result_length).to eq(4)
+  end
+
   it 'with input from day 9' do
     day_nine = DayNine.new(File.open('input.txt', 'r').read)
+    # 70180 - is too low
     expect(day_nine.result_length).to eq(70187)
+    # 70187 - is too high
   end
 end
