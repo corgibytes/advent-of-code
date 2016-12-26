@@ -48,7 +48,11 @@ describe DayNine do
   it 'with input from day 9' do
     day_nine = DayNine.new(File.open('input.txt', 'r').read)
     # 70180 - is too low
-    expect(day_nine.result_length).to eq(70187)
+    expect(day_nine.result_length).to eq(70186)
     # 70187 - is too high
+  end
+  it 'with input from day 9' do
+    day_nine = DayNine.new(File.open('input_catalina.txt', 'r').read)
+    expect(day_nine.result_length).to eq(115119)
   end
 end
