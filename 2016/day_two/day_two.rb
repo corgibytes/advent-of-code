@@ -1,0 +1,130 @@
+class Button
+  attr_accessor :above, :below, :left, :right, :value
+
+  def initialize(value, above = nil, below = nil, left = nil, right = nil)
+    @above = above
+    @below = below
+    @left = left
+    @right = right
+    @value = value
+  end
+
+  def right
+    @right || self
+  end
+
+  def left
+    @left || self
+  end
+
+  def above
+    @above || self
+  end
+
+  def below
+    @below || self
+  end
+
+  def to_s
+    @value
+  end
+end
+
+button_one = Button.new(1)
+button_two = Button.new(2)
+button_three = Button.new(3)
+button_four = Button.new(4)
+button_five = Button.new(5)
+button_six = Button.new(6)
+button_seven = Button.new(7)
+button_eight = Button.new(8)
+button_nine = Button.new(9)
+button_a = Button.new('A')
+button_b = Button.new('B')
+button_c = Button.new('C')
+button_d = Button.new('D')
+
+
+button_one.below = button_three
+
+button_two.right = button_three
+button_two.below = button_six
+
+button_three.above = button_one
+button_three.left  = button_two
+button_three.below = button_seven
+button_three.right = button_four
+
+button_four.left  = button_three
+button_four.below = button_eight
+
+button_five.right = button_six
+
+button_six.above = button_two
+button_six.left  = button_five
+button_six.below = button_a
+button_six.right = button_seven
+
+button_seven.above = button_three
+button_seven.left  = button_six
+button_seven.below = button_b
+button_seven.right = button_eight
+
+button_eight.above = button_four
+button_eight.left  = button_seven
+button_eight.below = button_c
+button_eight.right = button_nine
+
+button_nine.left  = button_eight
+
+button_a.above = button_six
+button_a.right = button_b
+
+button_b.above = button_seven
+button_b.left  = button_a
+button_b.below = button_d
+button_b.right = button_c
+
+button_c.above = button_eight
+button_c.left  = button_b
+
+button_d.above = button_b
+
+## Input
+input = [ "ULL",
+          "RRDDD",
+          "LURDL",
+          "UUUUD" ]
+
+mapping = { "U" => :above,
+            "D" => :below,
+            "L" => :left,
+            "R" => :right }
+
+location = button_five
+
+input.each do |sequence|
+  sequence.chars.each do |direction|
+    location = location.send(mapping[direction])
+  end
+  print "#{location.to_s}"
+end
+print "\n"
+
+
+input2 = [
+  "LLLUDRDLLULDUDLLRLUDURULDURRRRLLURLDLDDDULLDDUDLRDLRDUURRDUUDLLRUUDDLULURDLRDUUDUDRURULLLLDRULDDLRDDRDLRDDLURLDDUDLLUUDLRDDDDLULUUURRDLUUDDLULLURRRDULLUDUDRDRDDRLDLLRLRDDDRDLULLUULDLLLRRDDUURUURDLLDRRDDLRULDLLDRLLUDRRDLUUULDLURLLDDURRUULLLLLRLUDLDDLLLURRRDUDULRULULDDLLDLRDDDUULRLRDUURLURRUDDURRUUDUDLDDLDULDDDDDULRULRDLRLDLRDLDDLUDRDUUDLDUDUDLLLRLUUDRUDDDRDRURRLLLDLUULDUULRDLULLUURLDRRRLDRLUDRRURLDULULDRUDDULLLDRDLLULUDDDDRDRULDULRRRRDDRULDLRDU",
+  "DLDDRRDLLDUURRLULLLLRDRLUDURLDRRDURRRRUUDDUDRRDDDRRLDDLDDLURDLDRLUDULDUDUUDDDLLULRRLLUDULLLUULDDRDDUDUUDULURULULLDRLRUURDRDDLRRUDRUULLLLURRUDRDULDDRURRURLLLLLRLLLRLLUDUDLRDLULDUDLULLLUUDLLDDDUDUDLLRRDLRDLLLRRLRUDRDUDRURLUUURULLDDDDLLURDULURRLLLRLRRULLRRRLUUULLLLRLRDUURRDUURLLLDRDURRRULDDUDRRDLRLDLLRUDDLLUDRLLUUDRLLLLLLUDLURLLRUDRUUUULDLUDULLDDDDRLURUURDDDURRRLRLUDUUDURDDDDRRLRDLURDDLLULDRDDURLLURULUUUUURDUUULDRRLLURRRRRLDDUULLRULLDLDLDLRRRDRLDRUUD",
+  "RLDRRRURULDLUDLDUDLLDUUURRDUDDURULLRRDDULUUDRRRULRUURRRLUUULRDRUDRRLLRLURDLDRDRDLLUDRUULRUDRUDDRURLRLURRDDRRURUUDRRDDRURURUDUUUDUDRRLRDRUUURLLUUUDLRUUDDRDDDDLDRLRDUDDULDDLRLLRURLLURLDDLDLDDULLDDUUURDLRUDUUDLDURDDRUULDRDDRDDDUUUDRDRDDRRDRRDLRDRURDUDDLUUUDULLUULULULRDRUUDDURURDRRRRLUDLDUDURLDRURDLLUUUDLRRDRRURDDULULURLDUDDLUDLDDLLRLDULLULULURUURLDULUDLLUUDLDDULDRRDDUULLUDLDLLRDRDURDDURDDURLDDURUURLLRURURUDDURRDRLRLDDUUDUULRDLLURRRRULURULDUDUDDUDDRLLLDLURDUURUURLUULRRLDLULDDRLDDUURULURUDRD",
+  "URLDDRLLRRLDRLLRRURURURDDLRRRUUUURULRRUUDLUDRULLDLRUDDLULRUULDULURLLRLLUDDUDLURDRRRRLURULRURRURRULRRRULDLLDDLRLUDULUUUDDUDDRRDDDDUULRRLDRRULULRDUURRLDDRDULDURUDUDDLDLLURDDLDDRUDUUUDUUURDLDUDUUULLDLRDULRRRDLLURLDLLULRDDULULURLRLUULRLLLDDDUDLLDLURRRULRDUDDLULUDRUDDURULRLRUDDURLLURULLURDRULDUDLDULRRDLDURLUURRDDUDDUDRURUDDURRUUDURUULLLLDDRDDDDDULUUDDURRULLDRRLRRRRRDDRUUDDDURDRDRUDDUULDUDRRDRULUURLURLUDUDULDDRDULDLRUUDLLLRRLRDRDDUUULRDUDLUDLURRDUURDULDRLLDRDULDUDUULRLLDLRLDLUUDLRUULDUUULDLRLRLUULLLLRLRDUDRUUDURLDUDRRURLRUDRRLRDDLRDDLDDUDDDRLRLLRLUUURLURRRLULRLLDRLRDDRRDRL",
+  "DLLLLLLRLRDRUDLRLLRLDLRURRUURLDLDDDDDUDUULLLLRRLRRDUUDUDLULLRRDULUDLLULURLRULURUULRLURDUDLUDULULUUURLRUDULURULRURULURLRLDRRRRLUDLLDULLDDLLULUURRULRDURDUUDDDURRUDLLLLRLDLUDDULLDUDDURURURRRRULDULULUDDUUDRLRLLLDLLLUUUURUDUUDLDLLRLRDDUULLUURLDDLRRDRLULDLULRULDLDURLULUURRRUDLLRDLUDDULRULULUDDURDLUUURDUUURDUDURLUUDRLUDRULUDDRRDLUUDLLLRDDDDDDLDURDDLDRDLUUDRULLUDRDLDULLULDDRUUDRRLRURRUULLRLRDUUURRDRRDULDDULUUDDURLULRLRURLLRRR"
+]
+
+input2.each do |sequence|
+  sequence.chars.each do |direction|
+    location = location.send(mapping[direction])
+  end
+  print "#{location.to_s}"
+end
+print "\n"
+
