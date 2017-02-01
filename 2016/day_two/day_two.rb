@@ -31,64 +31,36 @@ class Button
 end
 
 button_one = Button.new(1)
-button_two = Button.new(2)
-button_three = Button.new(3)
-button_four = Button.new(4)
-button_five = Button.new(5)
-button_six = Button.new(6)
-button_seven = Button.new(7)
-button_eight = Button.new(8)
-button_nine = Button.new(9)
-button_a = Button.new('A')
-button_b = Button.new('B')
-button_c = Button.new('C')
-button_d = Button.new('D')
+button_two = Button.new(2, nil, nil, button_one, nil)
+button_three = Button.new(3, nil, nil, button_two, nil)
+button_four = Button.new(4, button_one, nil, nil, nil)
+button_five = Button.new(5, button_two, nil, button_four, nil)
+button_six = Button.new(6, button_three, nil, button_five, nil)
+button_seven = Button.new(7, button_four, nil, nil, nil)
+button_eight = Button.new(8, button_five, nil, button_seven, nil)
+button_nine = Button.new(9, button_six, nil, button_eight, nil)
 
+button_one.right = button_two
+button_one.below = button_four
 
-button_one.below = button_three
-
+button_two.left = button_one
 button_two.right = button_three
-button_two.below = button_six
+button_two.below = button_five
 
-button_three.above = button_one
-button_three.left  = button_two
-button_three.below = button_seven
-button_three.right = button_four
+button_three.left = button_two
+button_three.below = button_six
 
-button_four.left  = button_three
-button_four.below = button_eight
+button_four.below = button_seven
+button_four.right = button_five
 
+button_five.below = button_eight
 button_five.right = button_six
 
-button_six.above = button_two
-button_six.left  = button_five
-button_six.below = button_a
-button_six.right = button_seven
+button_six.below = button_nine
 
-button_seven.above = button_three
-button_seven.left  = button_six
-button_seven.below = button_b
 button_seven.right = button_eight
 
-button_eight.above = button_four
-button_eight.left  = button_seven
-button_eight.below = button_c
 button_eight.right = button_nine
-
-button_nine.left  = button_eight
-
-button_a.above = button_six
-button_a.right = button_b
-
-button_b.above = button_seven
-button_b.left  = button_a
-button_b.below = button_d
-button_b.right = button_c
-
-button_c.above = button_eight
-button_c.left  = button_b
-
-button_d.above = button_b
 
 ## Input
 input = [ "ULL",
