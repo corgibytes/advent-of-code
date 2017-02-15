@@ -12,7 +12,6 @@ class Triangle
     #   Not needed for sorted sides
   end
 
-  private
   def initialize(side1, side2, side3)
     @sides = [side1, side2, side3].sort
   end
