@@ -1,3 +1,4 @@
+require 'pry-byebug'
 class RoomDecoder
   def self.sector_id(name)
     name.split('[')
@@ -24,8 +25,19 @@ class RoomDecoder
     character_array.each do |ch|
       some_hash[ch] = some_hash[ch].to_i + 1
     end
-    sorted_hash = some_hash.sort { |a, b| b[1] <=> a[1] }
-    sorted_hash.keys.join('')
+    sorted_hash = Hash[some_hash.sort { |a, b| b[1] <=> a[1] }]
+    another_hash = {}
+    sorted_hash.each do |key, value|
+      if another_hash[value].nil?
+        another_hash[value] = [key]
+      else
+        another_hash[value] << key
+      end
+    end
+    another_hash.map do |key, value|
+      value.sort!
+    end
+    another_hash.values.join('')[0..4]
   end
 end
 
@@ -53,6 +65,9 @@ describe RoomDecoder do
     it 'ab-cdd' do
       expect(RoomDecoder.computed_checksum('ab-cdd')).to eq('dabc')
     end
+    it 'aaaaa-bbb-z-y-x' do
+      expect(RoomDecoder.computed_checksum('aaaaa-bbb-z-y-x')).to eq('abxyz')
+    end
   end
 
   describe 'sector_id' do
@@ -62,11 +77,16 @@ describe RoomDecoder do
       expect(RoomDecoder.sector_id(name)).to eq(123)
     end
 
-    xit 'a-b-c-d-e-f-g-h-987[abcde] is a real room because although the letters are all tied (1 of each), the first five are listed alphabetically.' do
+    it 'a-b-c-d-e-f-g-h-987[abcde] is a real room because although the letters are all tied (1 of each), the first five are listed alphabetically.' do
       name = "a-b-c-d-e-f-g-h-987[abcde]"
+      expect(RoomDecoder.sector_id(name)).to eq(987)
     end
 
-    it 'not-a-real-room-404[oarel] is a real room.'
+    it 'not-a-real-room-404[oarel] is a real room.' do
+      name = "not-a-real-room-404[oarel]"
+      expect(RoomDecoder.sector_id(name)).to eq(404)
+    end
+
     it 'totally-real-room-200[decoy] is not.' do
       name = "totally-real-room-200[decoy]"
       expect(RoomDecoder.sector_id(name)).to eq(0)
@@ -75,13 +95,6 @@ describe RoomDecoder do
     it 'mob-programming-rocks-500[welmn]' do
       name = "mob-programming-rocks-500[welmn]"
       expect(RoomDecoder.sector_id(name)).to eq(0)
-    end
-
-    it 'confirm something else'
-
-
-    describe "some way to determine most common used letters" do
-      it 'should have some function'
     end
   end
 end
